@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: MIT					
+pragma solidity ^0.8.0;					
+					
+contract OpBNBBridge {					
+address public bscBridgeAddress;					
+					
+event TransferToBSC(address indexed user, uint256 amount);					
+					
+modifier onlyBSCBridge() {					
+"require(msg.sender == bscBridgeAddress, ""Not authorized"");"					
+_;					
+}					
+					
+function setBSCBridgeAddress(address _bscBridgeAddress) external {					
+// Only the contract owner should set this					
+bscBridgeAddress = _bscBridgeAddress;					
+}					
+					
+function transferToBSC(uint256 amount) external {					
+// Logic for transferring tokens from opBNB to BSC					
+emit TransferToBSC(msg.sender, amount);					
+}					
+					
+function receiveFromBSC(address user, uint256 amount) external onlyBSCBridge {					
+// Logic for receiving tokens from BSC
